@@ -12,7 +12,6 @@ module.exports = class TpLink {
 
   async init() {
     this.tplink = await login(user, password);
-    const devices = await this.tplink.getDeviceList();
   }
 
   async getDevices() {

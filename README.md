@@ -15,4 +15,4 @@ This project provides an abstraction ontop of your smart home devices. This abst
 * `npm start`
 
 ## API Documentation
-[Postman Workspace](https://www.postman.com/galactic-desert-643697/workspace/smart-home-api/overview)
+[Postman Workspace](https://www.postman.com/galactic-desert-643697/workspace/smart-home/overview)

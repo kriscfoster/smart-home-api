@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "samsung-remote": "^1.6.0",
+    "samsung-tv-control": "^1.11.2",
     "tplink-cloud-api": "^0.8.1"
   }
 }

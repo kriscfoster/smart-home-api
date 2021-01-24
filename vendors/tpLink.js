@@ -4,28 +4,38 @@ const password = process.env.TP_LINK_PASSWORD;
 
 module.exports = class TpLink {
 
-  tplink;
+  tpLink;
 
   constructor() {
     this.init();
   }
 
   async init() {
-    this.tplink = await login(user, password);
+    this.tpLink = await login(user, password);
   }
 
   async getDevices() {
-    const devices = await this.tplink.getDeviceList();
+    const devices = [];
+    const tpLinkDevices = await this.tpLink.getDeviceList();
+    tpLinkDevices.forEach((d) => {
+      devices.push({
+        id: d.deviceId,
+        alias: d.alias,
+        model: d.deviceName,
+        vendor: 'tp-link',
+      });
+    });
+
     return devices;
   }
 
   async getDevice(id) {
-    const device = await this.tplink.getHS100(id);
+    const device = await this.tpLink.getHS100(id);
     return device;
   }
 
   async setDeviceState(id, state) {
-    const device = await this.tplink.getHS100(id);
+    const device = await this.tpLink.getHS100(id);
     if (state == 'on') {
       await device.powerOn();
       console.log(`turned device (${id}) on`);

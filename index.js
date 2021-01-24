@@ -1,27 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const TpLink = require('./tpLink');
+const DeviceService = require('./deviceService');
+const TpLink = require('./vendors/tpLink');
+const Samsung = require('./vendors/samsung');
 
 const PORT = process.env.PORT || 8080;
-const tpLink = new TpLink();
+const deviceService = new DeviceService(
+  new TpLink(),
+  new Samsung(),
+);
 
 const app = express();
 app.use(bodyParser.json());
 
 app.get('/api/devices', async(_req, res) => {
   try {
-    const devices = await tpLink.getDevices();
+    const devices = await deviceService.getDevices();
     res.send(devices);
   } catch (err) {
+    console.log(err);
     res.sendStatus(500);
   }
 });
 
 app.get('/api/devices/:id', async(req, res) => {
   try {
-    const device = await tpLink.getDevice(req.params.id);
+    const device = await deviceService.getDevice(req.params.id);
     res.send(device);
   } catch (err) {
+    console.log(err);
     res.sendStatus(500);
   }
 });
@@ -30,12 +37,13 @@ app.patch('/api/devices/:id', async(req, res) => {
   const { id } = req.params;
   const { state } = req.body;
   try {
-    await tpLink.setDeviceState(id, state);
+    await deviceService.setDeviceState(id, state);
     res.send({
-      state,
       success: true,
+      state,
     });
   } catch (err) {
+    console.log(err);
     res.sendStatus(500);
   }
 });
